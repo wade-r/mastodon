@@ -20,12 +20,9 @@
     MAGI::Systems
 
   - unless @description.blank?
-    %h3= t('about.description_headline', domain: Rails.configuration.x.local_domain)
     %p= @description.html_safe
 
   .screenshot-with-signup
-    .mascot= image_tag 'fluffy-elephant-friend.png'
-
     - if @open_registrations
       = simple_form_for(@user, url: user_registration_path) do |f|
         = f.simple_fields_for :account do |ff|
@@ -54,6 +51,8 @@
           = link_to t('about.other_instances'), 'https://github.com/tootsuite/mastodon/blob/master/docs/Using-Mastodon/List-of-Mastodon-instances.md'
           ·
           = link_to t('about.about_this'), about_more_path
+
+  %h3 What is Mastodon?
 
   %p= t('about.about_mastodon').html_safe
 

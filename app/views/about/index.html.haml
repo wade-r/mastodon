@@ -19,7 +19,9 @@
     = image_tag 'logo.svg'
     MAGI::Systems
 
-  %p= t('about.about_mastodon').html_safe
+  - unless @description.blank?
+    %h3= t('about.description_headline', domain: Rails.configuration.x.local_domain)
+    %p= @description.html_safe
 
   .screenshot-with-signup
     .mascot= image_tag 'fluffy-elephant-friend.png'
@@ -53,6 +55,8 @@
           ·
           = link_to t('about.about_this'), about_more_path
 
+  %p= t('about.about_mastodon').html_safe
+
   %h3= t('about.features_headline')
 
   .features-list
@@ -84,10 +88,6 @@
         %li
           = fa_icon('li check-square')
           = t 'about.features.api'
-
-  - unless @description.blank?
-    %h3= t('about.description_headline', domain: Rails.configuration.x.local_domain)
-    %p= @description.html_safe
 
   .actions
     .info

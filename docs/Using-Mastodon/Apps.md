@@ -13,5 +13,7 @@ Some people have started working on apps for the Mastodon API. Here is a list of
 |Albatross|iOS||[@goldie_ice@mastodon.social](https://mastodon.social/users/goldie_ice)|
 |Tooter|Chrome|<https://github.com/ineffyble/tooter>|[@effy@mastodon.social](https://mastodon.social/users/effy)|
 |tootstream|CLI|<https://github.com/magicalraccoon/tootstream>|[@Raccoon@mastodon.social](https://mastodon.social/users/Raccoon)|
+|HackerNewsBot|CLI|<https://github.com/raymestalez/mastodon-hnbot>|[@rayalez@hackertribe.io](https://hackertribe.io/users/rayalez)|
+|Mastodon.tools|Wordpress, web browser, social network|<https://github.com/davidlibeau/mastodon-tools>|[@David@mastodon.xyz](https://mastodon.xyz/users/David)|
 
 If you have a project like this, let me know so I can add it to the list!

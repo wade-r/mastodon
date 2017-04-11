@@ -19,8 +19,8 @@
     = image_tag 'logo.svg'
     MAGI::Systems
 
-  - unless @description.blank?
-    %p= @description.html_safe
+  - unless @instance_presenter.site_description.blank?
+    %p= @instance_presenter.site_description.html_safe
 
   .screenshot-with-signup
     - if @instance_presenter.open_registrations
@@ -74,9 +74,6 @@
           = fa_icon('li check-square')
           = t 'about.features.api'
 
-  - unless @instance_presenter.site_description.blank?
-    %h3= t('about.description_headline', domain: Rails.configuration.x.local_domain)
-    %p= @instance_presenter.site_description.html_safe
   .actions
     .info
       = link_to t('about.terms'), terms_path

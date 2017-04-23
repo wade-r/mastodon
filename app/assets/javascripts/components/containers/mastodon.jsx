@@ -1,4 +1,5 @@
 import { Provider } from 'react-redux';
+import PropTypes from 'prop-types';
 import configureStore from '../store/configureStore';
 import {
   refreshTimelineSuccess,
@@ -41,6 +42,7 @@ import Blocks from '../features/blocks';
 import Mutes from '../features/mutes';
 import Report from '../features/report';
 import { IntlProvider, addLocaleData } from 'react-intl';
+import ar from 'react-intl/locale-data/ar';
 import en from 'react-intl/locale-data/en';
 import de from 'react-intl/locale-data/de';
 import eo from 'react-intl/locale-data/eo';
@@ -57,7 +59,9 @@ import ru from 'react-intl/locale-data/ru';
 import uk from 'react-intl/locale-data/uk';
 import zh from 'react-intl/locale-data/zh';
 import bg from 'react-intl/locale-data/bg';
+import id from 'react-intl/locale-data/id';
 import { localeData as zh_hk } from '../locales/zh-hk';
+import { localeData as zh_cn } from '../locales/zh-cn';
 import pt_br from '../locales/pt-br';
 import getMessagesForLocale from '../locales';
 import { hydrateStore } from '../actions/store';
@@ -73,6 +77,7 @@ const browserHistory = useRouterHistory(createBrowserHistory)({
 
 addLocaleData([
   ...en,
+  ...ar,
   ...de,
   ...eo,
   ...es,
@@ -89,14 +94,12 @@ addLocaleData([
   ...uk,
   ...zh,
   ...zh_hk,
+  ...zh_cn,
   ...bg,
+  ...id,
 ]);
 
-const Mastodon = React.createClass({
-
-  propTypes: {
-    locale: React.PropTypes.string.isRequired
-  },
+class Mastodon extends React.Component {
 
   componentDidMount() {
     const { locale }  = this.props;
@@ -141,14 +144,14 @@ const Mastodon = React.createClass({
     }
 
     store.dispatch(showOnboardingOnce());
-  },
+  }
 
   componentWillUnmount () {
     if (typeof this.subscription !== 'undefined') {
       this.subscription.close();
       this.subscription = null;
     }
-  },
+  }
 
   render () {
     const { locale } = this.props;
@@ -191,6 +194,10 @@ const Mastodon = React.createClass({
     );
   }
 
-});
+}
+
+Mastodon.propTypes = {
+  locale: PropTypes.string.isRequired
+};
 
 export default Mastodon;

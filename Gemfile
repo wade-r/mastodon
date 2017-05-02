@@ -49,11 +49,12 @@ gem 'rails-settings-cached'
 gem 'redis', '~>3.2', require: ['redis', 'redis/connection/hiredis']
 gem 'rqrcode'
 gem 'ruby-oembed', require: 'oembed'
+gem 'sanitize'
 gem 'sidekiq'
 gem 'sidekiq-unique-jobs'
 gem 'simple-navigation'
 gem 'simple_form'
-gem 'sprockets-rails', :require => 'sprockets/railtie'
+gem 'sprockets-rails', require: 'sprockets/railtie'
 gem 'statsd-instrument'
 gem 'twitter-text'
 gem 'tzinfo-data'
@@ -82,13 +83,14 @@ group :test do
 end
 
 group :development do
-  gem 'rubocop', require: false
+  gem 'rubocop', '0.46.0', require: false
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'letter_opener'
   gem 'letter_opener_web'
   gem 'bullet'
   gem 'active_record_query_trace'
+  gem 'annotate'
 
   gem 'capistrano', '3.8.0'
   gem 'capistrano-rails'

@@ -1,5 +1,5 @@
 - content_for :header_tags do
-  = javascript_include_tag 'application_public', integrity: true, crossorigin: 'anonymous'
+  = javascript_pack_tag 'public', integrity: true, crossorigin: 'anonymous'
 
 - content_for :content do
   .admin-wrapper
@@ -7,7 +7,6 @@
       .sidebar
         = link_to root_path do
           = image_tag 'logo.svg', class: 'logo'
-
         = render_navigation
     .content-wrapper
       .content
@@ -17,4 +16,4 @@
 
         = yield
 
-= render template: "layouts/application", locals: { body_classes: 'admin' }
+= render template: 'layouts/application', locals: { body_classes: 'admin' }

@@ -52,8 +52,16 @@ class User < ApplicationRecord
   scope :admins,    -> { where(admin: true) }
   scope :confirmed, -> { where.not(confirmed_at: nil) }
 
+  before_validation :sanitize_languages
+
   def confirmed?
     confirmed_at.present?
+  end
+
+  def disable_two_factor!
+    self.otp_required_for_login = false
+    otp_backup_codes&.clear
+    save!
   end
 
   def send_devise_notification(notification, *args)
@@ -70,5 +78,11 @@ class User < ApplicationRecord
 
   def setting_auto_play_gif
     settings.auto_play_gif
+  end
+
+  private
+
+  def sanitize_languages
+    allowed_languages.reject!(&:blank?)
   end
 end

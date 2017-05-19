@@ -5,7 +5,7 @@ import StatusListContainer from '../ui/containers/status_list_container';
 import Column from '../ui/components/column';
 import { defineMessages, injectIntl, FormattedMessage } from 'react-intl';
 import ColumnSettingsContainer from './containers/column_settings_container';
-import { Link } from 'react-router';
+import Link from 'react-router/lib/Link';
 
 const messages = defineMessages({
   title: { id: 'column.home', defaultMessage: 'Home' }
@@ -17,6 +17,12 @@ const mapStateToProps = state => ({
 });
 
 class HomeTimeline extends React.PureComponent {
+
+  static propTypes = {
+    intl: PropTypes.object.isRequired,
+    hasUnread: PropTypes.bool,
+    hasFollows: PropTypes.bool
+  };
 
   render () {
     const { intl, hasUnread, hasFollows } = this.props;
@@ -44,11 +50,5 @@ class HomeTimeline extends React.PureComponent {
   }
 
 }
-
-HomeTimeline.propTypes = {
-  intl: PropTypes.object.isRequired,
-  hasUnread: PropTypes.bool,
-  hasFollows: PropTypes.bool
-};
 
 export default connect(mapStateToProps)(injectIntl(HomeTimeline));

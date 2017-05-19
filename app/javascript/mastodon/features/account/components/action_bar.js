@@ -2,7 +2,7 @@ import React from 'react';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import PropTypes from 'prop-types';
 import DropdownMenu from '../../../components/dropdown_menu';
-import { Link } from 'react-router';
+import Link from 'react-router/lib/Link';
 import { defineMessages, injectIntl, FormattedMessage, FormattedNumber } from 'react-intl';
 
 const messages = defineMessages({
@@ -19,6 +19,17 @@ const messages = defineMessages({
 });
 
 class ActionBar extends React.PureComponent {
+
+  static propTypes = {
+    account: ImmutablePropTypes.map.isRequired,
+    me: PropTypes.number.isRequired,
+    onFollow: PropTypes.func,
+    onBlock: PropTypes.func.isRequired,
+    onMention: PropTypes.func.isRequired,
+    onReport: PropTypes.func.isRequired,
+    onMute: PropTypes.func.isRequired,
+    intl: PropTypes.object.isRequired
+  };
 
   render () {
     const { account, me, intl } = this.props;
@@ -78,16 +89,5 @@ class ActionBar extends React.PureComponent {
   }
 
 }
-
-ActionBar.propTypes = {
-  account: ImmutablePropTypes.map.isRequired,
-  me: PropTypes.number.isRequired,
-  onFollow: PropTypes.func,
-  onBlock: PropTypes.func.isRequired,
-  onMention: PropTypes.func.isRequired,
-  onReport: PropTypes.func.isRequired,
-  onMute: PropTypes.func.isRequired,
-  intl: PropTypes.object.isRequired
-};
 
 export default injectIntl(ActionBar);

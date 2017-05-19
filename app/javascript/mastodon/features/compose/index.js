@@ -5,7 +5,7 @@ import NavigationContainer from './containers/navigation_container';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { mountCompose, unmountCompose } from '../../actions/compose';
-import { Link } from 'react-router';
+import Link from 'react-router/lib/Link';
 import { injectIntl, defineMessages } from 'react-intl';
 import SearchContainer from './containers/search_container';
 import { Motion, spring } from 'react-motion';
@@ -24,6 +24,13 @@ const mapStateToProps = state => ({
 });
 
 class Compose extends React.PureComponent {
+
+  static propTypes = {
+    dispatch: PropTypes.func.isRequired,
+    withHeader: PropTypes.bool,
+    showSearch: PropTypes.bool,
+    intl: PropTypes.object.isRequired
+  };
 
   componentDidMount () {
     this.props.dispatch(mountCompose());
@@ -75,12 +82,5 @@ class Compose extends React.PureComponent {
   }
 
 }
-
-Compose.propTypes = {
-  dispatch: PropTypes.func.isRequired,
-  withHeader: PropTypes.bool,
-  showSearch: PropTypes.bool,
-  intl: PropTypes.object.isRequired
-};
 
 export default connect(mapStateToProps)(injectIntl(Compose));

@@ -2,6 +2,7 @@
 
 module AccountHeader
   extend ActiveSupport::Concern
+
   IMAGE_MIME_TYPES = ['image/jpeg', 'image/png', 'image/gif'].freeze
 
   class_methods do
@@ -10,6 +11,7 @@ module AccountHeader
       styles[:static] = { format: 'png' } if file.content_type == 'image/gif'
       styles
     end
+
     private :header_styles
   end
 
@@ -25,17 +27,6 @@ module AccountHeader
 
     def header_static_url
       header_content_type == 'image/gif' ? header.url(:static) : header_original_url
-    end
-
-    def header_remote_url=(url)
-      parsed_url = Addressable::URI.parse(url).normalize
-
-      return if !%w(http https).include?(parsed_url.scheme) || parsed_url.host.empty? || self[:header_remote_url] == url
-
-      self.header              = URI.parse(parsed_url.to_s)
-      self[:header_remote_url] = url
-    rescue OpenURI::HTTPError => e
-      Rails.logger.debug "Error fetching remote header: #{e}"
     end
   end
 end

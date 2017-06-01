@@ -3,36 +3,37 @@ import LoadingIndicator from '../../../components/loading_indicator';
 import ImmutablePropTypes from 'react-immutable-proptypes';
 import PropTypes from 'prop-types';
 import ExtendedVideoPlayer from '../../../components/extended_video_player';
-import ImageLoader from 'react-imageloader';
 import { defineMessages, injectIntl } from 'react-intl';
 import IconButton from '../../../components/icon_button';
 import ImmutablePureComponent from 'react-immutable-pure-component';
+import ImageLoader from './image_loader';
 
 const messages = defineMessages({
-  close: { id: 'lightbox.close', defaultMessage: 'Close' }
+  close: { id: 'lightbox.close', defaultMessage: 'Close' },
 });
 
 class MediaModal extends ImmutablePureComponent {
 
-  constructor (props, context) {
-    super(props, context);
-    this.state = {
-      index: null
-    };
-    this.handleNextClick = this.handleNextClick.bind(this);
-    this.handlePrevClick = this.handlePrevClick.bind(this);
-    this.handleKeyUp = this.handleKeyUp.bind(this);
+  static propTypes = {
+    media: ImmutablePropTypes.list.isRequired,
+    index: PropTypes.number.isRequired,
+    onClose: PropTypes.func.isRequired,
+    intl: PropTypes.object.isRequired,
+  };
+
+  state = {
+    index: null,
+  };
+
+  handleNextClick = () => {
+    this.setState({ index: (this.getIndex() + 1) % this.props.media.size });
   }
 
-  handleNextClick () {
-    this.setState({ index: (this.getIndex() + 1) % this.props.media.size});
+  handlePrevClick = () => {
+    this.setState({ index: (this.getIndex() - 1) % this.props.media.size });
   }
 
-  handlePrevClick () {
-    this.setState({ index: (this.getIndex() - 1) % this.props.media.size});
-  }
-
-  handleKeyUp (e) {
+  handleKeyUp = (e) => {
     switch(e.key) {
     case 'ArrowLeft':
       this.handlePrevClick();
@@ -72,7 +73,7 @@ class MediaModal extends ImmutablePureComponent {
     }
 
     if (attachment.get('type') === 'image') {
-      content = <ImageLoader src={url} imgProps={{ style: { display: 'block' } }} />;
+      content = <ImageLoader src={url} />;
     } else if (attachment.get('type') === 'gifv') {
       content = <ExtendedVideoPlayer src={url} muted={true} controls={false} />;
     }
@@ -92,12 +93,5 @@ class MediaModal extends ImmutablePureComponent {
   }
 
 }
-
-MediaModal.propTypes = {
-  media: ImmutablePropTypes.list.isRequired,
-  index: PropTypes.number.isRequired,
-  onClose: PropTypes.func.isRequired,
-  intl: PropTypes.object.isRequired
-};
 
 export default injectIntl(MediaModal);

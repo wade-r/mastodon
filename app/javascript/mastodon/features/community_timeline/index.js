@@ -5,7 +5,8 @@ import StatusListContainer from '../ui/containers/status_list_container';
 import Column from '../../components/column';
 import ColumnHeader from '../../components/column_header';
 import {
-  refreshTimeline,
+  refreshCommunityTimeline,
+  expandCommunityTimeline,
   updateTimeline,
   deleteFromTimelines,
   connectTimeline,
@@ -14,6 +15,7 @@ import {
 import { addColumn, removeColumn, moveColumn } from '../../actions/columns';
 import { defineMessages, injectIntl, FormattedMessage } from 'react-intl';
 import ColumnBackButtonSlim from '../../components/column_back_button_slim';
+import ColumnSettingsContainer from './containers/column_settings_container';
 import createStream from '../../stream';
 
 const messages = defineMessages({
@@ -60,7 +62,7 @@ class CommunityTimeline extends React.PureComponent {
   componentDidMount () {
     const { dispatch, streamingAPIBaseURL, accessToken } = this.props;
 
-    dispatch(refreshTimeline('community'));
+    dispatch(refreshCommunityTimeline());
 
     if (typeof this._subscription !== 'undefined') {
       return;
@@ -105,6 +107,10 @@ class CommunityTimeline extends React.PureComponent {
     this.column = c;
   }
 
+  handleLoadMore = () => {
+    this.props.dispatch(expandCommunityTimeline());
+  }
+
   render () {
     const { intl, hasUnread, columnId, multiColumn } = this.props;
     const pinned = !!columnId;
@@ -120,13 +126,15 @@ class CommunityTimeline extends React.PureComponent {
           onClick={this.handleHeaderClick}
           pinned={pinned}
           multiColumn={multiColumn}
-        />
+        >
+          <ColumnSettingsContainer />
+        </ColumnHeader>
 
         <StatusListContainer
-          {...this.props}
           trackScroll={!pinned}
           scrollKey={`community_timeline-${columnId}`}
-          type='community'
+          timelineId='community'
+          loadMore={this.handleLoadMore}
           emptyMessage={<FormattedMessage id='empty_column.community' defaultMessage='The local timeline is empty. Write something publicly to get the ball rolling!' />}
         />
       </Column>
